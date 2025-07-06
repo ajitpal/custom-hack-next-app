@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { LingoProvider, loadDictionary } from "lingo.dev/react/rsc";
+import { LingoProvider } from "@/components/common/lingo-provider";
 import AppLocaleSwitcher from "@/components/common/app-locale-switcher";
 import { AutumnProvider } from "autumn-js/react";
 
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <LingoProvider loadDictionary={(locale) => loadDictionary(locale)}>
+    <LingoProvider>
       <AutumnProvider>
         <html>
           <body

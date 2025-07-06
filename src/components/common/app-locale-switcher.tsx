@@ -1,18 +1,35 @@
 "use client";
 
-import { LocaleSwitcher } from "lingo.dev/react/client";
+import { useLingo } from "@/components/common/lingo-provider";
 import { usePathname } from "next/navigation";
 
 export default function AppLocaleSwitcher() {
   const pathname = usePathname();
   const isRootPage = pathname === "/";
+  const { locale, setLocale } = useLingo();
+
+  const locales = ['en', 'es', 'fr', 'de'] as const;
+  
+  const localeNames = {
+    en: 'EN',
+    es: 'ES', 
+    fr: 'FR',
+    de: 'DE'
+  };
 
   return (
     <div className="absolute top-2 right-3 z-50 flex flex-col items-center">
-      <LocaleSwitcher
-        locales={["en", "es", "fr", "de"]}
+      <select
+        value={locale}
+        onChange={(e) => setLocale(e.target.value as any)}
         className="border border-gray-800 rounded-md p-2 text-white bg-primary cursor-pointer hover:bg-primary/80 transition-colors"
-      />
+      >
+        {locales.map((loc) => (
+          <option key={loc} value={loc} className="bg-primary text-white">
+            {localeNames[loc]}
+          </option>
+        ))}
+      </select>
       {isRootPage && (
         <>
           <Arrow />

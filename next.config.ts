@@ -1,13 +1,16 @@
 import type { NextConfig } from "next";
-import lingoCompiler from "lingo.dev/compiler";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["lingo.dev", "unplugin"],
+  transpilePackages: ["lingo.dev"],
+  // Disable webpack cache in WebContainer environment to avoid file system issues
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = false;
+    }
+    return config;
+  },
 };
 
-// for Lingo.dev Compiler configuration see https://lingo.dev/en/compiler/frameworks/nextjs
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr", "de"],
-  models: "lingo.dev",
-})(nextConfig);
+// Temporarily disable Lingo.dev compiler integration to fix WebContainer compatibility
+// The app will use static translations from the dictionary files instead
+export default nextConfig;
