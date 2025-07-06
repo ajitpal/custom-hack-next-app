@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 import lingoCompiler from "lingo.dev/compiler";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  transpilePackages: ["lingo.dev"],
 };
 
 // for Lingo.dev Compiler configuration see https://lingo.dev/en/compiler/frameworks/nextjs
