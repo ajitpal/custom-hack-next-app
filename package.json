@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "PRISMA_FORCE_NAPI=true next dev",
-    "build": "PRISMA_FORCE_NAPI=true NODE_ENV=production next build",
+    "build": "PRISMA_FORCE_NAPI=true npx prisma generate && NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint",
     "db:seed": "PRISMA_FORCE_NAPI=true npx tsx src/scripts/seed.ts",
