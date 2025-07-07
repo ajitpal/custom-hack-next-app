@@ -18,7 +18,7 @@ export default async function Home() {
       <h1 className="text-4xl font-bold text-center">
         Welcome to{" "}
         <AuroraText colors={["#6600ff", "#69e300", "#80ffce"]}>
-          CustomHack train aa
+          CustomHack
         </AuroraText>
       </h1>
       <BetterAuth userEmail={userEmail} />
