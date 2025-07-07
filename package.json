@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "PRISMA_FORCE_NAPI=true npx prisma generate && next dev",
-    "build": "PRISMA_FORCE_NAPI=true npx prisma generate && NODE_ENV=production next build",
+    "dev": "npx prisma generate && next dev",
+    "build": "npx prisma generate && NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint",
-    "db:seed": "PRISMA_FORCE_NAPI=true npx tsx src/scripts/seed.ts",
-    "db:generate": "PRISMA_FORCE_NAPI=true npx prisma generate",
-    "db:migrate": "PRISMA_FORCE_NAPI=true npx prisma migrate dev",
-    "db:reset": "PRISMA_FORCE_NAPI=true npx prisma migrate reset --force",
+    "db:seed": "npx tsx src/scripts/seed.ts",
+    "db:generate": "npx prisma generate",
+    "db:migrate": "npx prisma migrate dev",
+    "db:reset": "npx prisma migrate reset --force",
     "setup": "npm run db:generate && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
