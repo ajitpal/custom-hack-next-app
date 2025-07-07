@@ -3,13 +3,17 @@
 import type { ScrapeResponse } from "@mendable/firecrawl-js";
 import { useEffect, useState } from "react";
 
+interface FirecrawlFormProps {
+  onScrape?: (data: ScrapeResponse) => void;
+  onComplete?: (data: ScrapeResponse) => void;
+  defaultUrl?: string;
+}
+
 export default function FirecrawlForm({
   onScrape,
+  onComplete,
   defaultUrl = "",
-}: {
-  onScrape: (data: ScrapeResponse) => void;
-  defaultUrl?: string;
-}) {
+}: FirecrawlFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [url, setUrl] = useState(defaultUrl);
 
@@ -32,7 +36,12 @@ export default function FirecrawlForm({
 
     if (response.ok) {
       console.log("Scraped successfully. Response: ", data);
-      onScrape(data);
+      // Check for onComplete first (Tambo framework), then fall back to onScrape
+      if (onComplete) {
+        onComplete(data);
+      } else if (onScrape) {
+        onScrape(data);
+      }
     } else {
       console.error("Failed to scrape. Response: ", data);
       if (data?.error) {
