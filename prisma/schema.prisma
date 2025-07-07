@@ -41,16 +41,28 @@ model session {
 }
 
 model user {
-  id            String    @id
-  email         String    @unique
-  password      String?
-  name          String?
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime
-  emailVerified Boolean
-  account       account[]
-  session       session[]
+  id                  String         @id
+  email               String         @unique
+  password            String?
+  name                String?
+  image               String?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime
+  emailVerified       Boolean
+  // Extended fields for e-commerce personalization
+  languagePreference  String         @default("en")
+  accessibilityNeeds  String[]       @default([])
+  demographicInfo     Json?
+  personaId           String?
+  loyaltyTier         String         @default("bronze")
+  totalSpent          Float          @default(0)
+  
+  account             account[]
+  session             session[]
+  userProfile         UserProfile?
+  userPreferences     UserPreference[]
+  activityLogs        ActivityLog[]
+  persona             Persona?       @relation(fields: [personaId], references: [id])
 }
 
 model verification {
@@ -60,4 +72,165 @@ model verification {
   expiresAt  DateTime  @db.Timestamp(6)
   createdAt  DateTime? @db.Timestamp(6)
   updatedAt  DateTime? @db.Timestamp(6)
+}
+
+model UserProfile {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  firstName       String?
+  lastName        String?
+  dateOfBirth     DateTime?
+  location        String?
+  phoneNumber     String?
+  company         String?
+  jobTitle        String?
+  interests       String[]  @default([])
+  bio             String?
+  avatarUrl       String?
+  timezone        String    @default("UTC")
+  notificationSettings Json @default("{\"email\": true, \"push\": false, \"sms\": false}")
+  onboardingCompleted Boolean @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  user            user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model UserPreference {
+  id              String   @id @default(cuid())
+  userId          String
+  categoryInterests String[] @default([])
+  brandPreferences String[] @default([])
+  priceRangeMin   Float?
+  priceRangeMax   Float?
+  preferredColors String[] @default([])
+  shoppingHabits  Json?    // Flexible field for various shopping preferences
+  communicationPrefs Json @default("{\"emailRecommendations\": true, \"priceAlerts\": false}")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  user            user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Product {
+  id               String   @id @default(cuid())
+  name             String
+  description      String
+  price            Float
+  originalPrice    Float?   // For showing discounts
+  category         String
+  subcategory      String?
+  brand            String?
+  imageUrl         String?
+  imageUrls        String[] @default([])
+  tags             String[] @default([])
+  features         String[] @default([])
+  specifications   Json?
+  stockQuantity    Int      @default(0)
+  isActive         Boolean  @default(true)
+  trending         Boolean  @default(false)
+  trendingScore    Float    @default(0)
+  rating           Float?
+  reviewCount      Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  activityLogs     ActivityLog[]
+  productReviews   ProductReview[]
+}
+
+model ProductReview {
+  id        String   @id @default(cuid())
+  productId String
+  source    String   // e.g., "firecrawl", "amazon", "manual"
+  rating    Float
+  title     String?
+  content   String
+  author    String?
+  verified  Boolean  @default(false)
+  helpful   Int      @default(0)
+  createdAt DateTime @default(now())
+  
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ActivityLog {
+  id          String   @id @default(cuid())
+  userId      String
+  actionType  String   // "view", "click", "purchase", "search", "wishlist", etc.
+  productId   String?
+  metadata    Json?    // Additional context like search terms, page visited, etc.
+  sessionId   String?
+  ipAddress   String?
+  userAgent   String?
+  timestamp   DateTime @default(now())
+  
+  user        user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+}
+
+model Persona {
+  id                    String   @id @default(cuid())
+  name                  String   @unique
+  description           String
+  preferences           Json     // Shopping preferences, interests, etc.
+  accessibilitySettings Json     // UI adaptations, font sizes, contrast, etc.
+  demographicProfile    Json     // Age range, location, income level, etc.
+  shoppingBehavior      Json     // Frequency, budget, preferred channels, etc.
+  uiSettings            Json     // Theme, layout preferences, etc.
+  isActive              Boolean  @default(true)
+  isDefault             Boolean  @default(false)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  users                 user[]
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  orderNumber     String      @unique
+  status          String      @default("pending") // pending, confirmed, shipped, delivered, cancelled
+  subtotal        Float
+  tax             Float       @default(0)
+  shipping        Float       @default(0)
+  discount        Float       @default(0)
+  total           Float
+  currency        String      @default("USD")
+  shippingAddress Json
+  billingAddress  Json?
+  paymentMethod   String?
+  paymentStatus   String      @default("pending")
+  notes           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  orderItems      OrderItem[]
+}
+
+model OrderItem {
+  id         String  @id @default(cuid())
+  orderId    String
+  productId  String
+  quantity   Int
+  unitPrice  Float
+  totalPrice Float
+  
+  order      Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  parentId    String?
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  parent      Category? @relation("CategoryParent", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryParent")
 }
