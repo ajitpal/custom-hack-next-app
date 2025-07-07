@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "NODE_ENV=production next build",
+    "dev": "PRISMA_FORCE_NAPI=true next dev",
+    "build": "PRISMA_FORCE_NAPI=true NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint"
   },
