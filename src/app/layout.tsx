@@ -4,6 +4,8 @@ import "./globals.css";
 import { LingoProvider } from "@/components/common/lingo-provider";
 import AppLocaleSwitcher from "@/components/common/app-locale-switcher";
 import { AutumnProvider } from "autumn-js/react";
+import { PersonaProvider } from "@/contexts/PersonaContext";
+import Navigation from "@/components/layout/Navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,18 +29,21 @@ export default function RootLayout({
 }>) {
   return (
     <LingoProvider>
-      <AutumnProvider>
-        <html>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)] antialiased`}
-          >
-            <div className="flex flex-col gap-8 items-center min-h-screen py-8 px-4 max-w-3xl mx-auto">
-              {children}
-            </div>
-            <AppLocaleSwitcher />
-          </body>
-        </html>
-      </AutumnProvider>
+      <PersonaProvider>
+        <AutumnProvider>
+          <html>
+            <body
+              className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)] antialiased`}
+            >
+              <Navigation />
+              <main>
+                {children}
+              </main>
+              <AppLocaleSwitcher />
+            </body>
+          </html>
+        </AutumnProvider>
+      </PersonaProvider>
     </LingoProvider>
   );
 }

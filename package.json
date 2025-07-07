@@ -6,7 +6,10 @@
     "dev": "PRISMA_FORCE_NAPI=true next dev",
     "build": "PRISMA_FORCE_NAPI=true NODE_ENV=production next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:seed": "npx tsx src/scripts/seed.ts",
+    "db:generate": "PRISMA_FORCE_NAPI=true npx prisma generate",
+    "db:migrate": "PRISMA_FORCE_NAPI=true npx prisma migrate dev"
   },
   "dependencies": {
     "@mendable/firecrawl-js": "^1.21.1",
@@ -45,6 +48,7 @@
     "postcss": "^8.5.6",
     "prisma": "6.11.0",
     "tailwindcss": "^4",
+    "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.4",
     "typescript": "^5"
   },
