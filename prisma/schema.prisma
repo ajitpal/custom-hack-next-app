@@ -22,7 +22,7 @@ model account {
   scope                 String?
   password              String?
   createdAt             DateTime  @db.Timestamp(6)
-  updatedAt             DateTime  @db.Timestamp(6)
+  updatedAt             DateTime  @updatedAt @db.Timestamp(6)
   user                  user      @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
@@ -32,7 +32,7 @@ model session {
   userId       String
   expires      DateTime
   createdAt    DateTime @default(now())
-  updatedAt    DateTime
+  updatedAt    DateTime @updatedAt
   expiresAt    DateTime @db.Timestamp(6)
   token        String   @unique
   ipAddress    String?
@@ -47,7 +47,7 @@ model user {
   name                String?
   image               String?
   createdAt           DateTime       @default(now())
-  updatedAt           DateTime
+  updatedAt           DateTime       @updatedAt
   emailVerified       Boolean
   // Extended fields for e-commerce personalization
   languagePreference  String         @default("en")
@@ -71,7 +71,7 @@ model verification {
   value      String
   expiresAt  DateTime  @db.Timestamp(6)
   createdAt  DateTime? @db.Timestamp(6)
-  updatedAt  DateTime? @db.Timestamp(6)
+  updatedAt  DateTime? @updatedAt @db.Timestamp(6)
 }
 
 model UserProfile {
