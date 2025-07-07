@@ -35,9 +35,9 @@ export default function Hero() {
           theme === 'dark' && "text-white"
         )}>
           Welcome to{" "}
-          <AuroraText colors={["#6600ff", "#69e300", "#80ffce"]}>
+          <span className="bg-gradient-to-r from-purple-600 via-green-500 to-blue-500 bg-clip-text text-transparent">
             ShopAI
-          </AuroraText>
+          </span>
         </h1>
 
         {/* Subtitle */}

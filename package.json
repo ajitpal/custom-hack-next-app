@@ -7,9 +7,11 @@
     "build": "PRISMA_FORCE_NAPI=true NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint",
-    "db:seed": "npx tsx src/scripts/seed.ts",
+    "db:seed": "PRISMA_FORCE_NAPI=true npx tsx src/scripts/seed.ts",
     "db:generate": "PRISMA_FORCE_NAPI=true npx prisma generate",
-    "db:migrate": "PRISMA_FORCE_NAPI=true npx prisma migrate dev"
+    "db:migrate": "PRISMA_FORCE_NAPI=true npx prisma migrate dev",
+    "db:reset": "PRISMA_FORCE_NAPI=true npx prisma migrate reset --force",
+    "setup": "npm run db:generate && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
     "@mendable/firecrawl-js": "^1.21.1",
