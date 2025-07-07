@@ -6,6 +6,7 @@ import AppLocaleSwitcher from "@/components/common/app-locale-switcher";
 import { AutumnProvider } from "autumn-js/react";
 import { PersonaProvider } from "@/contexts/PersonaContext";
 import Navigation from "@/components/layout/Navigation";
+import { ErrorBoundaryWrapper } from "@/components/common/ErrorBoundary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,11 +36,13 @@ export default function RootLayout({
             <body
               className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)] antialiased`}
             >
-              <Navigation />
-              <main>
-                {children}
-              </main>
-              <AppLocaleSwitcher />
+              <ErrorBoundaryWrapper>
+                <Navigation />
+                <main>
+                  {children}
+                </main>
+                <AppLocaleSwitcher />
+              </ErrorBoundaryWrapper>
             </body>
           </html>
         </AutumnProvider>

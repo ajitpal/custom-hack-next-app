@@ -1,30 +1,202 @@
-# custom-hack-next-app
+# ShopAI - Personalized E-commerce Shopping Assistant
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). It is a boilerplate for [CustomHack](https://lu.ma/rnvz7h05).
+## 🛍️ Overview
 
-**tl;dr** [click here to deploy to Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flingodotdev%2Fcustom-hack-next-app) or [open in StackBlitz](https://stackblitz.com/github/lingodotdev/custom-hack-next-app).
+ShopAI is a comprehensive e-commerce platform that delivers personalized shopping experiences through AI-powered recommendations, adaptive UI, dynamic pricing, and accessibility features. Built with Next.js and integrated with multiple modern services.
+
+## ✨ Key Features
+
+- **🤖 AI-Powered Recommendations**: Intelligent product suggestions based on user behavior and preferences
+- **🎨 Adaptive UI**: Dynamic interface that adjusts based on user personas and accessibility needs
+- **💰 Dynamic Pricing**: Real-time price adjustments based on loyalty, demographics, and trends
+- **🌍 Real-time Localization**: Multi-language support with instant translation
+- **♿ Accessibility First**: Comprehensive accessibility features and high-contrast themes
+- **💬 Conversational Shopping**: AI chat assistant for natural shopping interactions
+- **📊 Persona-Based Experience**: Different user types get tailored experiences
+
+## 🛠️ Tech Stack
+
+### Core Framework
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Tailwind CSS 4** - Utility-first styling
+- **Prisma** - Database ORM
+
+### Integrated Services
+- **[Lingo.dev](https://lingo.dev)** - Real-time localization and translation
+- **[Tambo.co](https://tambo.co)** - Conversational AI for shopping assistance
+- **[Autumn](https://useautumn.com/)** - Dynamic pricing and feature gating
+- **[Better Auth](https://better-auth.com/)** - Advanced authentication
+- **[Supabase](https://supabase.com/)** - Database and real-time features
+- **[Resend](https://resend.com/)** - Transactional emails
+- **[Firecrawl](https://firecrawl.dev/)** - Web scraping for product data
+- **[Magic UI](https://magicui.design/)** - Beautiful UI components
 
 ## Getting Started
 
-First, install the dependencies via a package manager (we prefer [pnpm](https://pnpm.io/)):
+### Prerequisites
+
+- Node.js 18+ 
+- pnpm (recommended) or npm
+- Supabase account and database
+- API keys for integrated services
+
+### Installation
+
+1. **Clone and install dependencies:**
 
 ```bash
+git clone [repository-url]
+cd custom-hack-next-app
 pnpm install
 ```
 
-Next run the development server
+2. **Set up environment variables:**
+
+```bash
+cp .env.example .env
+```
+
+Fill in your API keys and database connection strings.
+
+3. **Initialize the database:**
+
+```bash
+pnpm run setup
+```
+
+This will generate Prisma client, run migrations, and seed the database with sample data.
+
+4. **Start the development server:**
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. **Open [http://localhost:3000](http://localhost:3000)** to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🎭 User Personas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application supports multiple user personas with different experiences:
 
-## Learn More
+### Tech Enthusiast
+- **Preferences**: Electronics, Gaming, Latest gadgets
+- **UI**: Dark theme, medium fonts
+- **Budget**: $100-$2000
+- **Behavior**: Weekly shopping, high-value orders
+
+### Accessibility Focused
+- **Preferences**: Books, Health & Beauty
+- **UI**: High contrast, large fonts, reduced motion
+- **Budget**: $20-$200  
+- **Behavior**: Monthly shopping, screen reader support
+
+### Budget Conscious
+- **Preferences**: Clothing, Books, Home goods
+- **UI**: Light theme, standard fonts
+- **Budget**: $5-$100
+- **Behavior**: Occasional shopping, deal-focused
+
+## 🚀 Key Features Deep Dive
+
+### Intelligent Recommendations
+- Behavior-based suggestions from user activity logs
+- Demographic targeting using signup data
+- Cold start solutions for new users
+- Real-time trending product integration
+
+### Adaptive User Interface
+- Theme switching (Light/Dark/High Contrast)
+- Font size adjustment (Small/Medium/Large)
+- Accessibility options (Screen reader, reduced motion)
+- Persona-based layout changes
+
+### Dynamic Pricing System
+- Loyalty tier discounts (Bronze/Silver/Gold)
+- Accessibility support discounts
+- Time-based promotional pricing
+- Regional price adjustments
+
+### Conversational Shopping
+- Natural language product search
+- AI-powered shopping assistance
+- Context-aware recommendations
+- Multi-language conversation support
+
+## 📁 Project Structure
+
+```
+src/
+├── app/                     # Next.js App Router pages
+│   ├── auth/               # Authentication pages
+│   ├── shop/               # Shopping interface
+│   ├── dashboard/          # User dashboard
+│   └── api/                # API routes
+├── components/             # React components
+│   ├── ecommerce/         # Shopping-specific components
+│   ├── tambo/             # AI chat components
+│   ├── auth/              # Authentication components
+│   └── common/            # Shared components
+├── contexts/              # React contexts
+├── lib/                   # Utilities and configurations
+└── scripts/               # Database seeding scripts
+```
+
+## 🔧 Available Scripts
+
+```bash
+# Development
+pnpm dev              # Start development server
+pnpm build            # Build for production
+pnpm start            # Start production server
+
+# Database
+pnpm run setup        # Initialize database (generate + migrate + seed)
+pnpm run db:generate  # Generate Prisma client
+pnpm run db:migrate   # Run database migrations
+pnpm run db:seed      # Seed with sample data
+pnpm run db:reset     # Reset database
+```
+
+## 🔑 Environment Variables
+
+Create a `.env` file with the following variables:
+
+```env
+# Database
+DATABASE_URL="your-supabase-connection-string"
+DIRECT_URL="your-supabase-direct-connection-string"
+
+# Authentication
+BETTER_AUTH_SECRET="your-secret-key"
+BETTER_AUTH_URL="http://localhost:3000"
+
+# Services
+LINGODOTDEV_API_KEY="your-lingo-api-key"
+NEXT_PUBLIC_TAMBO_API_KEY="your-tambo-api-key"
+AUTUMN_SECRET_KEY="your-autumn-api-key"
+RESEND_API_KEY="your-resend-api-key"
+RESEND_FROM_EMAIL="your-sender-email"
+FIRECRAWL_API_KEY="your-firecrawl-api-key"
+```
+
+## 🎯 Usage Examples
+
+### User Journey - New User
+1. Sign up and complete onboarding questionnaire
+2. Receive AI-powered welcome recommendations
+3. Browse with personalized filters and pricing
+4. Chat with AI assistant for product discovery
+5. Experience adaptive UI based on preferences
+
+### User Journey - Returning User  
+1. Login with personalized dashboard
+2. View activity history and recommendations
+3. Continue shopping with learned preferences
+4. Receive loyalty-based dynamic pricing
+5. Get contextual email communications
+
+## 🔗 Service Integration Details
 
 ### Lingo.dev
 
@@ -145,6 +317,41 @@ UI library for Design Engineers
 - https://magicui.design/
 - https://magicui.design/docs/components
 
+## 🧪 Testing
+
+### User Personas Testing
+1. Use the persona switcher in the top navigation
+2. Switch between different personas to see:
+   - UI theme and font size changes
+   - Different product recommendations
+   - Adjusted pricing and discounts
+   - Accessibility features activation
+
+### AI Chat Testing
+1. Visit `/tambo` for general chat
+2. Visit `/tambo/auth` for authenticated chat
+3. Try queries like:
+   - "Show me electronics under $500"
+   - "I need running shoes"
+   - "What's trending in books?"
+
+### API Testing
+- Health check: `GET /api/health`
+- Products: `GET /api/products?category=Electronics`
+- Recommendations: `GET /api/products/recommendations`
+- Cart: `POST /api/cart` with `{productId, quantity}`
+
+## 🚨 Troubleshooting
+
+### Database Issues
+- Run `pnpm run db:reset` to reset database
+- Check Supabase connection strings
+- Ensure proper environment variables
+
+### Service Integration Issues
+- Verify all API keys are correctly set
+- Check service-specific documentation for setup
+
 ### Next.js
 
 The React Framework for the Web
@@ -152,13 +359,24 @@ The React Framework for the Web
 - https://nextjs.org/docs
 - https://nextjs.org/learn
 
-### Setting up env variables
+## 📄 License
 
-You need to create and use your own accounts and setup env variables for your project. It is up to you how you do this:
+MIT License - see LICENSE file for details.
 
-1. put them in `.env` file of your project. See `env.example` for a full list of env vars. Next.js loads them automatically for you.
+## 🤝 Contributing
 
-2. export them globally (eg. `export LINGODOTDEV_API_KEY=api_xxx`) in your shell or profile (eg. `~/.profile`)
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📞 Support
+
+For issues and questions:
+- Check the troubleshooting section
+- Review service documentation
+- Open an issue in the repository
 
 ## Deploy on Vercel
 
@@ -166,4 +384,4 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-When deploying to Vercel make sure to populate all env variables in your app.
+When deploying make sure to populate all environment variables and set up your database.
