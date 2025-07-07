@@ -66,5 +66,4 @@ export const auth = betterAuth({
     //   // Integrate with Resend for password reset
     //   console.log("Sending reset password email to", user.email, "with url", url);
     // },
-  },
 });
